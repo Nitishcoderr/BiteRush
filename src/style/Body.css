@@ -8,3 +8,18 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+
+.filter{
+    margin: 0.5rem;
+}
+
+.filter button{
+    padding: 0.4rem 0.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid black;
+    outline: none;
+    text-transform: uppercase;
+    
+}
