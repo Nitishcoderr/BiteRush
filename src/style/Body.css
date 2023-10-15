@@ -12,6 +12,7 @@
 
 .filter{
     margin: 0.5rem;
+    padding: 0rem 2rem;
 }
 
 .filter button{
@@ -21,5 +22,5 @@
     border: 1px solid black;
     outline: none;
     text-transform: uppercase;
-    
+    margin: 0rem 0.5rem;
 }

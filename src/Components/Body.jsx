@@ -1,22 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RestaurantCard from './RestaurantCard';
 import '../style/Body.css';
-import resList from '../utils/mockData';
+import Shimmer from './Shimmer';
 
 const Body = () => {
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
 
-// By using useState we can change the state of resList data
-  const [listOfRestaurants, setListOfRestaurants] = useState(resList)
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        'https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING'
+      );
+      const data = await response.json();
 
-  return (
+      const restaurants =
+        data?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+      if (restaurants && Array.isArray(restaurants)) {
+        const formattedRestaurants = restaurants.map((restaurant) => ({
+          id: restaurant.info.id,
+          name: restaurant.info.name,
+          locality: restaurant.info.locality,
+          areaName: restaurant.info.areaName,
+          costForTwo: restaurant.info.costForTwo,
+          cloudinaryImageId: restaurant.info.cloudinaryImageId,
+          cuisines: restaurant.info.cuisines,
+          avgRating: restaurant.info.avgRating,
+          deliveryTime: restaurant.info.sla.deliveryTime,
+          lastMileTravel: restaurant.info.sla.lastMileTravel,
+          serviceability: restaurant.info.sla.serviceability,
+          nextCloseTime: restaurant.info.availability.nextCloseTime,
+          isOpen: restaurant.info.isOpen,
+          restaurantLink: restaurant.cta.link,
+        }));
+
+        setListOfRestaurants(formattedRestaurants);
+      } else {
+        console.error('No restaurant information found in the API response.');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
         <button
           onClick={() => {
-            // here we are filtering out the data which was coming from resList which one having more than 4 rating
-            const filteredList = listOfRestaurants.filter((res) => res.data.avgRating > 4);
-            // the data which was filtered -> now we are seting or passing in setListOfRestaurants this will render the resList
-            setListOfRestaurants(filteredList)
+            const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4);
+            setListOfRestaurants(filteredList);
           }}
           className="filter-btn">
           Top rated button
@@ -25,7 +64,7 @@ const Body = () => {
       <div className="res-container">
         {listOfRestaurants.map((restaurant) => (
           <RestaurantCard
-            key={restaurant.data.id}
+            key={restaurant.id}
             resList={restaurant}
           />
         ))}

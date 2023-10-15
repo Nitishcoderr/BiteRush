@@ -676,7 +676,7 @@ let resList = [
         locality: "5th Block",
         parentId: 171678,
         unserviceable: false,
-        veg: false,
+        veg: true,
         select: false,
         favorite: false,
         tradeCampaignHeaders: [],

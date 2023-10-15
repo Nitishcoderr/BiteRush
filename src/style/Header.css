@@ -23,3 +23,8 @@
    font-family: Ubuntu;
    text-transform: uppercase;
 }
+
+.login{
+    padding: 0 20px;
+    cursor: pointer;
+}
