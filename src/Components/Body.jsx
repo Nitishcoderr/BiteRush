@@ -5,6 +5,8 @@ import Shimmer from './Shimmer';
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -35,6 +37,7 @@ const Body = () => {
         }));
 
         setListOfRestaurants(formattedRestaurants);
+        setFilteredRestaurants(formattedRestaurants);
       } else {
         console.error('No restaurant information found in the API response.');
       }
@@ -52,9 +55,25 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              console.log(searchText);
+              const filteredRestaurant = listOfRestaurants.filter((res)=>res.name.toLowerCase().includes(searchText.toLowerCase()))
+              setFilteredRestaurants(filteredRestaurant);
+            }}>
+            Search
+          </button>
+        </div>
         <button
           onClick={() => {
-            const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4);
+            const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4.3);
             setListOfRestaurants(filteredList);
           }}
           className="filter-btn">
@@ -62,7 +81,7 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => (
+        {filteredRestaurants.map((restaurant) => (
           <RestaurantCard
             key={restaurant.id}
             resList={restaurant}

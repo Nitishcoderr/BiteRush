@@ -13,10 +13,12 @@
 .filter{
     margin: 0.5rem;
     padding: 0rem 2rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .filter button{
-    padding: 0.4rem 0.5rem;
+    padding: 0rem 0.5rem;
     cursor: pointer;
     background-color: transparent;
     border: 1px solid black;
