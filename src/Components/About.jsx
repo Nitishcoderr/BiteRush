@@ -1,9 +1,13 @@
 import React from 'react'
+import UserCard from './UserCard'
+import '../style/About.css';
+
 
 const About = () => {
   return (
     <div>
-      sdfvdsfvdsvds
+      <h1>ABOUT</h1>
+      <UserCard name={"Nitish"} location={"Delhi"} />
     </div>
   )
 }
