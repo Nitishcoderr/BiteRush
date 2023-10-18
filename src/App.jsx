@@ -5,8 +5,16 @@ import Error from "./Components/Error"
 import Header from "./Components/Header"
 import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
 import RestaurantMenuPage from "./Components/RestaurantMenuPage"
+// import Grocery from "./Components/Grocery"
+import { Suspense, lazy } from "react"
+import Shimmer from "./Components/Shimmer"
+
+
+
 
 function App() {
+
+  const Grocery = lazy(()=> import("./Components/Grocery") )
 
   return (
     <Router>
@@ -15,6 +23,7 @@ function App() {
         <Route exact path="/" element={<Body/>} />
         <Route exact path="/about" element={<About/>} />
         <Route exact path="/contact" element={<Contact/>} />
+        <Route exact path="/grocery" element={ <Suspense fallback={<Shimmer/>} ><Grocery/></Suspense>  } />
         <Route exact path="/restaurants/:resId" element={<RestaurantMenuPage/>} />
         {/* page not found */}
         <Route exact path="/*" element={<Error/>} />
