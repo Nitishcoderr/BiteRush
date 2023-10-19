@@ -1,6 +1,5 @@
 import React from 'react'
 import UserCard from './UserCard'
-import '../style/About.css';
 
 
 const About = () => {

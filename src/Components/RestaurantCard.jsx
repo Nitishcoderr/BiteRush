@@ -1,5 +1,4 @@
 import React from 'react'
-import  '../style/RestaurantCard.css'
 import { CDN_URL } from '../utils/constant';
 
 const RestaurantCard = (props) => {

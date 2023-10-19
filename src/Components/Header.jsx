@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import logo from '../../src/assets/logo.png';
-import '../style/Header.css';
 import { Link } from 'react-router-dom';
 import useOnlinestatus from '../utils/useOnlineStatus';
 

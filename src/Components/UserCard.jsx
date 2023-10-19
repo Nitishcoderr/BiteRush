@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import '../style/About.css';
 
-const UserCard = ({name,location}) => {
+const UserCard = () => {
 
   const [userData, setUserData] = useState({
     name:"",
