@@ -26,7 +26,7 @@ const UserCard = () => {
 
 
   return (
-    <div className='user-card'>
+    <div className='user-card m-4 p-4 bg-gray-50 rounded-lg'>
       <img src={userData.avatar_url} alt="avatar" />
       <h1>Name - {userData.name}</h1>
       <h3>Location - {userData.location}</h3>

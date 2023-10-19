@@ -10,31 +10,31 @@ const Header = () => {
 
 
   return (
-    <div className="header">
-      <div className="logo-container">
-        <img
+    <div className="flex justify-between items-center shadow-lg bg-pink-100 ">
+      <div className="">
+        <img className='w-20'
           src={logo}
           alt="logo"
         />
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
+      <div className="flex items-center">
+        <ul className='flex p-4 m-4'>
+          <li className='px-4'>
             Online status : {onlineStatus ? "✅" : "🔴"}
           </li>
-          <li>
+          <li className='px-4'>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className='px-4'>
             <Link to="/about">About</Link>
           </li>
-          <li>
+          <li className='px-4'>
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li>
+          <li className='px-4'>
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li>
+          <li className='px-4'>
             <Link to="/cart">Cart</Link>
           </li>
           <button

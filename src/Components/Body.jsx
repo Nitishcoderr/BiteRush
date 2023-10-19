@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard,{withOpenLabel} from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import useOnlinestatus from '../utils/useOnlineStatus';
@@ -9,6 +9,9 @@ const Body = () => {
   const [searchText, setSearchText] = useState('');
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
+
+  const RestaurantOpenlabel = withOpenLabel(RestaurantCard)
+
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -17,7 +20,7 @@ const Body = () => {
       const data = await response.json();
 
       const restaurants =
-        data?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
       if (restaurants && Array.isArray(restaurants)) {
         const formattedRestaurants = restaurants.map((restaurant) => ({
@@ -36,7 +39,6 @@ const Body = () => {
           isOpen: restaurant.info.isOpen,
           restaurantLink: restaurant.cta.link,
         }));
-
         setListOfRestaurants(formattedRestaurants);
         setFilteredRestaurants(formattedRestaurants);
       } else {
@@ -47,54 +49,60 @@ const Body = () => {
     }
   };
 
+  const onlineStatus = useOnlinestatus();
 
-  const onlineStatus = useOnlinestatus()
-
-  
   useEffect(() => {
     fetchData();
   }, []);
-  
-  if(onlineStatus === false) return <h1>Looks like you are offline! Check your internet connection</h1>
 
-  
+  if (onlineStatus === false)
+    return <h1>Looks like you are offline! Check your internet connection</h1>;
+
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="filter flex">
+        <div className="m-4 p-4">
           <input
             type="text"
-            className="search-box"
+            className="border border-solid border-black"
+            placeholder="Search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
-              console.log(searchText);
-              const filteredRestaurant = listOfRestaurants.filter((res)=>res.name.toLowerCase().includes(searchText.toLowerCase()))
+              const filteredRestaurant = listOfRestaurants.filter((res) =>
+                res.name.toLowerCase().includes(searchText.toLowerCase())
+              );
               setFilteredRestaurants(filteredRestaurant);
             }}>
             Search
           </button>
         </div>
-        <button
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4);
-            setFilteredRestaurants(filteredList);
-          }}
-          className="filter-btn">
-          Top rated button
-        </button>
+        <div className="m-4 p-4 flex items-center">
+          <button
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter((res) => res.avgRating > 4);
+              setFilteredRestaurants(filteredList);
+            }}
+            className="px-4 py-2 bg-gray-100 rounded-lg">
+            Top rated button
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap items-center justify-center">
         {filteredRestaurants.map((restaurant) => (
-          <Link key={restaurant.id} to={'/restaurants/'+restaurant.id}>
-          <RestaurantCard
-            
-            resList={restaurant}
-          />
+          <Link
+            key={restaurant.id}
+            to={'/restaurants/' + restaurant.id}>
+              {/* IF THE ITEM IS DELIVERABLE OR NOT TO ADD BATCH */}
+              {
+                restaurant.isOpen ? <RestaurantOpenlabel resList={restaurant} /> : <RestaurantCard resList={restaurant} />
+              }
+            <RestaurantCard resList={restaurant} />
           </Link>
         ))}
       </div>
