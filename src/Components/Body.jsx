@@ -102,7 +102,6 @@ const Body = () => {
               {
                 restaurant.isOpen ? <RestaurantOpenlabel resList={restaurant} /> : <RestaurantCard resList={restaurant} />
               }
-            <RestaurantCard resList={restaurant} />
           </Link>
         ))}
       </div>

@@ -13,7 +13,8 @@ const RestaurantCard = (props) => {
       <h4 className='px-2 py-1  text-sm'>{cuisines.join(", ")}</h4>
       <h4 className='px-2 py-1 font-extrabold text-red-800'>{avgRating}</h4>
       <h4 className='px-2 py-1'>{costForTwo}</h4>
-      <h5 className='px-2 py-1 text-slate-700'>{deliveryTime} Minutes</h5>
+      <p className='px-2 py-1 text-slate-700'>{deliveryTime} Minutes</p>
+      
     </div>
   )
 }
