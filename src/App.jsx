@@ -6,8 +6,9 @@ import Header from "./Components/Header"
 import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
 import RestaurantMenuPage from "./Components/RestaurantMenuPage"
 // import Grocery from "./Components/Grocery"
-import { Suspense, lazy } from "react"
+import { Suspense, lazy, useContext, useEffect, useState } from "react"
 import Shimmer from "./Components/Shimmer"
+import UserContext from "./utils/UserContext"
 
 
 
@@ -16,8 +17,22 @@ function App() {
 
   const Grocery = lazy(()=> import("./Components/Grocery") )
 
+
+  const [userName, setUserName] = useState()
+  
+
+  useEffect(() => {
+  //  Make an api call and send username and password 
+  const data = {
+    name:"Nitish"
+  };
+  setUserName(data.name)
+  }, [])
+  
+
   return (
     <Router>
+      <UserContext.Provider value={{loggedInUser:userName,setUserName}} >
       <Header/>
       <Routes>
         <Route exact path="/" element={<Body/>} />
@@ -28,7 +43,7 @@ function App() {
         {/* page not found */}
         <Route exact path="/*" element={<Error/>} />
       </Routes>
-      
+      </UserContext.Provider>
     </Router>
   )
 }
