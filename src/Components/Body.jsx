@@ -56,7 +56,7 @@ const Body = () => {
   if (onlineStatus === false)
     return <h1>Looks like you are offline! Check your internet connection</h1>;
 
-    const {loggedInUser,setUserName} = useContext(UserContext)
+    const {loggedInUser,setUserName} = useContext(UserContext) 
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />

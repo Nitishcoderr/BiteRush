@@ -9,6 +9,8 @@ import RestaurantMenuPage from "./Components/RestaurantMenuPage"
 import { Suspense, lazy, useContext, useEffect, useState } from "react"
 import Shimmer from "./Components/Shimmer"
 import UserContext from "./utils/UserContext"
+import { Provider } from "react-redux"
+import appStore from "./utils/appStore"
 
 
 
@@ -28,10 +30,10 @@ function App() {
   };
   setUserName(data.name)
   }, [])
-  
 
   return (
     <Router>
+      <Provider store={appStore}>
       <UserContext.Provider value={{loggedInUser:userName,setUserName}} >
       <Header/>
       <Routes>
@@ -44,6 +46,7 @@ function App() {
         <Route exact path="/*" element={<Error/>} />
       </Routes>
       </UserContext.Provider>
+      </Provider>
     </Router>
   )
 }
