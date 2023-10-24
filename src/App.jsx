@@ -11,6 +11,7 @@ import Shimmer from "./Components/Shimmer"
 import UserContext from "./utils/UserContext"
 import { Provider } from "react-redux"
 import appStore from "./utils/appStore"
+import Cart from "./Components/Cart"
 
 
 
@@ -42,6 +43,7 @@ function App() {
         <Route exact path="/contact" element={<Contact/>} />
         <Route exact path="/grocery" element={ <Suspense fallback={<Shimmer/>} ><Grocery/></Suspense>  } />
         <Route exact path="/restaurants/:resId" element={<RestaurantMenuPage/>} />
+        <Route exact path="/cart" element={<Cart/>} />
         {/* page not found */}
         <Route exact path="/*" element={<Error/>} />
       </Routes>
