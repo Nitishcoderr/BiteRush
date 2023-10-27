@@ -14,7 +14,7 @@ const cartSlice = createSlice({
             state.items.pop();
         },
         clearCart: (state) => {
-            state.items.length = 0;
+            return {items:[]}; //This new object will be replaced inside originalState = {items:[]}
         }
     }
 })
